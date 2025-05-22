@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <memory> 
+#include "KhachHang.h"
+#include "SanPham.h"
+#include "DonHang.h"
+
+using namespace std;
+
+int main() {
+    vector<KhachHang> danhSachKhachHang;
+    vector<SanPham> danhSachSanPham;
+    vector<DonHang> danhSachDonHang;
+
+    int luaChon;
+    do {
+        cout << "\n====== MENU QUAN LY DON HANG ======\n";
+        cout << "1. Them khach hang\n";
+        cout << "2. Them san pham\n";
+        cout << "3. Tao don hang\n";
+        cout << "4. Xuat danh sach don hang\n";
+        cout << "0. Thoat\n";
+        cout << "Lua chon cua ban: ";
+        cin >> luaChon;
+        cin.ignore();
+
+        switch (luaChon) {
+        case 1: {
+            KhachHang kh;
+            cout << "\nNhap thong tin khach hang:\n";
+            kh.nhap();
+            danhSachKhachHang.push_back(kh);
+            break;
+        }
+        case 2: {
+            SanPham sp;
+            cout << "\nNhap thong tin san pham:\n";
+            sp.nhap();
+            danhSachSanPham.push_back(sp);
+            break;
+        }
+        case 3: {
+            if (danhSachKhachHang.empty() || danhSachSanPham.empty()) {
+                cout << "Chua co khach hang hoac san pham de tao don hang!\n";
+                break;
+            }
+
+            DonHang dh;
+            dh.nhap(danhSachKhachHang, danhSachSanPham);
+            danhSachDonHang.push_back(dh);
+            break;
+        }
+        case 4: {
+            cout << "\n==== DANH SACH DON HANG ====\n";
+            for (const auto& dh : danhSachDonHang) {
+                dh.xuat();
+                cout << "-----------------------------\n";
+            }
+            break;
+        }
+        case 0:
+            cout << "Thoat chuong trinh.\n";
+            break;
+        default:
+            cout << "Lua chon khong hop le!\n";
+        }
+    } while (luaChon != 0);
+
+    return 0;
+}
